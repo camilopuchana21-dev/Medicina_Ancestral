@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicina Ancestral Siapidara</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .user-name {
+            color: white;
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+        .user-name:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header/Hero Section -->
+    <header class="hero">
+        <nav class="navbar">
+            <div class="logo">🌿 Medicina Ancestral</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Inicio</a></li>
+                <li><a href="plantas.html">Plantas</a></li>
+                <li><a href="#">Historia</a></li>
+                <li><a href="#">Contacto</a></li>
+            </ul>
+            <div class="auth-buttons" id="authButtons">
+                <!-- Los botones se cargarán dinámicamente con JavaScript -->
+            </div>
+        </nav>
+        
+        <div class="hero-content">
+            <h1>Medicina Ancestral</h1>
+            <p class="hero-subtitle">Preservando el conocimiento de nuestros ancestros</p>
+            <p class="hero-description">Descubre el poder sanador de las plantas medicinales tradicionales, transmitido de generación en generación por el pueblo Siapidara.</p>
+            <div class="hero-buttons">
+                <a href="plantas.html" class="btn btn-primary">Explorar Plantas</a>
+                <a href="#" class="btn btn-secondary">Nuestra Historia</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cards de Categorías -->
+    <section class="categories">
+        <h2>Plantas Medicinales</h2>
+        <p class="section-subtitle">Explora nuestra colección de 6 plantas</p>
+        
+        <div class="category-cards">
+            <a href="#" class="card">
+                <i class="fas fa-book icon"></i>
+                <h3>Diccionario</h3>
+                <p>Términos culturales y médicos</p>
+            </a>
+            
+            <a href="#" class="card">
+                <i class="fas fa-history icon"></i>
+                <h3>Historia y Cultura</h3>
+                <p>Conoce nuestras tradiciones</p>
+            </a>
+            
+            <a href="#" class="card">
+                <i class="fas fa-leaf icon"></i>
+                <h3>Remedios y Recetas</h3>
+                <p>Recetas y preparaciones</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Plantas Populares -->
+    <section class="popular-plants">
+        <div class="section-header">
+            <h2>Plantas Más Utilizadas</h2>
+            <p>Las plantas medicinales más populares de nuestra comunidad</p>
+            <a href="plantas.html" class="view-all">Ver todas →</a>
+        </div>
+
+        <div class="plants-grid">
+            <!-- Manzanilla -->
+            <div class="plant-card">
+                <div class="plant-image">
+                    <img src="imagenes/manzanilla.png" alt="Manzanilla">
+                </div>
+                <div class="plant-content">
+                    <h3>Manzanilla</h3>
+                    <p class="scientific-name">Matricaria chamomilla</p>
+                    <div class="rating">⭐ 4.8</div>
+                    <div class="plant-tags">
+                        <span class="tag">Antiinflamatoria</span>
+                        <span class="tag">Calmante</span>
+                        <span class="tag">Digestiva</span>
+                        <span class="tag">+1</span>
+                    </div>
+                    <p class="plant-description">Utilizada para tratar problemas digestivos, insomnio, ansiedad y cólicos menstruales.</p>
+                    <a href="planta-detalle.html?planta=manzanilla" class="btn-more">Ver más información →</a>
+                </div>
+            </div>
+
+            <!-- Sábila -->
+            <div class="plant-card">
+                <div class="plant-image">
+                    <img src="imagenes/sabila.png" alt="Sábila">
+                </div>
+                <div class="plant-content">
+                    <h3>Sábila (Aloe Vera)</h3>
+                    <p class="scientific-name">Aloe barbadensis miller</p>
+                    <div class="rating">⭐ 4.9</div>
+                    <div class="plant-tags">
+                        <span class="tag">Cicatrizante</span>
+                        <span class="tag">Hidratante</span>
+                        <span class="tag">Antiinflamatoria</span>
+                        <span class="tag">+1</span>
+                    </div>
+                    <p class="plant-description">Tratamiento de quemaduras, heridas, problemas digestivos y cuidado de la piel.</p>
+                    <a href="planta-detalle.html?planta=sabila" class="btn-more">Ver más información →</a>
+                </div>
+            </div>
+
+            <!-- Jengibre -->
+            <div class="plant-card">
+                <div class="plant-image">
+                    <img src="imagenes/gengibre.png" alt="Jengibre">
+                </div>
+                <div class="plant-content">
+                    <h3>Jengibre</h3>
+                    <p class="scientific-name">Zingiber officinale</p>
+                    <div class="rating">⭐ 4.6</div>
+                    <div class="plant-tags">
+                        <span class="tag">Antiinflamatoria</span>
+                        <span class="tag">Digestiva</span>
+                        <span class="tag">Antinauseosa</span>
+                        <span class="tag">+1</span>
+                    </div>
+                    <p class="plant-description">Tratamiento de náuseas, problemas digestivos, dolores articulares y resfriados.</p>
+                    <a href="planta-detalle.html?planta=jengibre" class="btn-more">Ver más información →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Últimas Contribuciones de la Comunidad -->
+<section class="news">
+    <h2>Últimos Saberes Compartidos</h2>
+    <p>Descubre los conocimientos que nuestra comunidad ha compartido</p>
+    
+    <div class="news-container" id="ultimasContribuciones">
+        <div class="loading-contribuciones" style="text-align: center; padding: 2rem;">
+            <i class="fas fa-spinner fa-spin"></i> Cargando saberes...
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 2rem;">
+        <a href="contribuciones.html" class="view-all">Ver todos los saberes →</a>
+    </div>
+</section>
+
+<style>
+    .contribucion-item {
+        background: var(--beige-fondo);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+        cursor: pointer;
+        border-left: 4px solid #4a7c4a;
+    }
+    .contribucion-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .contribucion-categoria {
+        display: inline-block;
+        padding: 0.2rem 0.8rem;
+        background: #e8f0e8;
+        color: #2c5f2d;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+    .contribucion-titulo {
+        font-size: 1.2rem;
+        color: #2c5f2d;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+    }
+    .contribucion-descripcion {
+        color: #666;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        margin-bottom: 0.5rem;
+    }
+    .contribucion-autor {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #888;
+        font-size: 0.8rem;
+    }
+    .contribucion-autor i {
+        color: #4a7c4a;
+    }
+    .loading-contribuciones {
+        text-align: center;
+        padding: 2rem;
+        color: #666;
+    }
+    .empty-contribuciones {
+        text-align: center;
+        padding: 2rem;
+        color: #666;
+        background: var(--beige-fondo);
+        border-radius: 12px;
+    }
+</style>
+
+<script>
+    // Cargar últimas contribuciones para el index
+    async function cargarUltimasContribuciones() {
+        try {
+            const response = await fetch('pages/obtener_contribuciones.php');
+            const contribuciones = await response.json();
+            const container = document.getElementById('ultimasContribuciones');
+            
+            if (contribuciones.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-contribuciones">
+                        <i class="fas fa-leaf" style="font-size: 2rem; color: #ccc;"></i>
+                        <p style="margin-top: 0.5rem;">Aún no hay saberes compartidos. ¡Sé el primero en contribuir!</p>
+                        <a href="pages/contribuir.html" class="btn-more" style="margin-top: 0.5rem; display: inline-block;">Compartir mi saber →</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Mostrar solo las últimas 3 contribuciones
+            const ultimas = contribuciones.slice(0, 3);
+            
+            container.innerHTML = ultimas.map(contribucion => `
+                <div class="contribucion-item" onclick="window.location.href='contribucion-detalle.html?id=${contribucion.id}'">
+                    <span class="contribucion-categoria">
+                        <i class="fas fa-tag"></i> ${getCategoriaIcon(contribucion.categoria)} ${contribucion.categoria}
+                    </span>
+                    <h3 class="contribucion-titulo">${escapeHtml(contribucion.titulo)}</h3>
+                    <p class="contribucion-descripcion">${escapeHtml(contribucion.descripcion)}</p>
+                    <div class="contribucion-autor">
+                        <i class="fas fa-user"></i>
+                        <span>${escapeHtml(contribucion.autor)}</span>
+                        <span style="margin-left: auto;">${escapeHtml(contribucion.fecha)}</span>
+                    </div>
+                </div>
+            `).join('');
+        } catch (error) {
+            console.error('Error:', error);
+            document.getElementById('ultimasContribuciones').innerHTML = `
+                <div class="empty-contribuciones">
+                    <i class="fas fa-exclamation-triangle" style="font-size: 2rem; color: #c00;"></i>
+                    <p style="margin-top: 0.5rem;">Error al cargar los saberes</p>
+                </div>
+            `;
+        }
+    }
+
+    function getCategoriaIcon(categoria) {
+        const iconos = {
+            'planta': '🌿',
+            'remedio': '🍵',
+            'historia': '📖',
+            'termino': '📚',
+            'experiencia': '✨'
+        };
+        return iconos[categoria.toLowerCase()] || '🌱';
+    }
+
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+
+    // Ejecutar al cargar la página
+    document.addEventListener('DOMContentLoaded', cargarUltimasContribuciones);
+</script>
+
+<!-- Contribución -->
+<section class="contribute">
+    <h2>¿Quieres contribuir?</h2>
+    <p>Ayúdanos a preservar y compartir el conocimiento ancestral. Comparte tus saberes tradicionales con nuestra comunidad.</p>
+    <a href="#" id="btnContribuir" class="btn btn-primary">Contribuir Conocimiento</a>
+</section>
+
+<script>
+    // Agregar funcionalidad al botón de contribuir
+    document.getElementById('btnContribuir').addEventListener('click', async function(e) {
+        e.preventDefault();
+        
+        try {
+            const response = await fetch('pages/verificar_sesion.php');
+            const data = await response.json();
+            
+            if (data.logged_in) {
+                // Usuario logueado - ir a contribuir
+                window.location.href = 'pages/contribuir.html';
+            } else {
+                // Usuario no logueado - ir a login con mensaje en la URL
+                window.location.href = 'iniciar-sesion.html?error=' + encodeURIComponent('Debes iniciar sesión para contribuir con tu conocimiento');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            window.location.href = 'iniciar-sesion.html?error=' + encodeURIComponent('Debes iniciar sesión para contribuir');
+        }
+    });
+</script>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🌿 Medicina Ancestral</h3>
+                <p>Preservando el conocimiento de nuestros ancestros</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#">Sobre Nosotros</a></li>
+                    <li><a href="plantas.html">Plantas Medicinales</a></li>
+                    <li><a href="#">Historia y Cultura</a></li>
+                    <li><a href="#">Remedios y Recetas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal y Políticas</h4>
+                <ul>
+                    <li><a href="#">Términos de Uso</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Ley 1581 de 2012</a></li>
+                    <li><a href="#">Protección de Datos</a></li>
+                    <li><a href="#">Reportar un Error</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Medicina Ancestral Siapidara. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Función para verificar si hay sesión activa
+        function checkSession() {
+            fetch('pages/verificar_sesion.php')
+                .then(response => response.json())
+                .then(data => {
+                    const authButtons = document.getElementById('authButtons');
+                    
+                    if (data.logged_in) {
+                        // Usuario logueado - mostrar nombre como enlace al perfil
+                        authButtons.innerHTML = `
+                            <a href="pages/perfil.html" class="user-name">
+                                <i class="fas fa-user-circle"></i> 
+                                ${data.nombre} ${data.apellido}
+                            </a>
+                            <a href="pages/cerrar-sesion.php" class="btn-auth btn-login">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                            </a>
+                        `;
+                    } else {
+                        // Usuario no logueado - mostrar botones de login/registro
+                        authButtons.innerHTML = `
+                            <a href="iniciar-sesion.html" class="btn-auth btn-login">
+                                <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                            </a>
+                            <a href="registrarse.html" class="btn-auth btn-register">
+                                <i class="fas fa-user-plus"></i> Registrarse
+                            </a>
+                        `;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al verificar sesión:', error);
+                    // En caso de error, mostrar botones por defecto
+                    const authButtons = document.getElementById('authButtons');
+                    authButtons.innerHTML = `
+                        <a href="iniciar-sesion.html" class="btn-auth btn-login">Iniciar Sesión</a>
+                        <a href="registrarse.html" class="btn-auth btn-register">Registrarse</a>
+                    `;
+                });
+        }
+
+        // Ejecutar al cargar la página
+        document.addEventListener('DOMContentLoaded', checkSession);
+    </script>
+</body>
+</html>

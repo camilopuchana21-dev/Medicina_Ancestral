@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribuir - Medicina Ancestral</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: linear-gradient(to right, #2c5f2d, #4a7c4a);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-menu a:hover {
+            opacity: 0.8;
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .btn-auth {
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        .btn-login:hover {
+            background: white;
+            color: #2c5f2d;
+        }
+        .btn-register {
+            background: white;
+            color: #2c5f2d;
+            border: 2px solid white;
+        }
+        .btn-register:hover {
+            background: transparent;
+            color: white;
+        }
+        .contribuir-container {
+            max-width: 800px;
+            margin: 120px auto 50px;
+            padding: 2.5rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .contribuir-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .contribuir-header i {
+            font-size: 3rem;
+            color: #2c5f2d;
+            margin-bottom: 1rem;
+        }
+        .contribuir-header h1 {
+            color: #2c5f2d;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .contribuir-header p {
+            color: #666;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #1a3a1a;
+            font-weight: 600;
+        }
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+        }
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            border-color: #4a7c4a;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(74, 124, 74, 0.1);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: #2c5f2d;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-submit:hover {
+            background: #4a7c4a;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(44, 95, 45, 0.3);
+        }
+        .btn-back {
+            display: inline-block;
+            margin-top: 1rem;
+            text-align: center;
+            color: #2c5f2d;
+            text-decoration: none;
+        }
+        .message {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: none;
+        }
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        .user-info {
+            background: #e8f5e8;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #2c5f2d;
+        }
+        footer {
+            background-color: #1a3a1a;
+            color: white;
+            padding: 3rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-section h3, .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+        .footer-section p, .footer-section ul {
+            color: #ccc;
+        }
+        .footer-section ul {
+            list-style: none;
+        }
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🌿 Medicina Ancestral</div>
+        <ul class="nav-menu">
+            <li><a href="../index.html">Inicio</a></li>
+            <li><a href="../plantas.html">Plantas</a></li>
+            <li><a href="#">Historia</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+        <div class="auth-buttons" id="authButtons">
+            <!-- Los botones se cargarán dinámicamente -->
+        </div>
+    </nav>
+
+    <div class="contribuir-container">
+        <div class="contribuir-header">
+            <i class="fas fa-leaf"></i>
+            <h1>Comparte tu Saber</h1>
+            <p>Ayúdanos a preservar y compartir el conocimiento ancestral</p>
+        </div>
+
+        <div id="userInfo" class="user-info" style="display: none;">
+            <i class="fas fa-user"></i>
+            <span id="userName"></span>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <form id="contribucionForm" method="POST" action="procesar_contribucion.php">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="titulo">Título de tu contribución *</label>
+                    <input type="text" id="titulo" name="titulo" 
+                           placeholder="Ej: Manzanilla - Usos tradicionales" required>
+                </div>
+                <div class="form-group">
+                    <label for="categoria">Categoría *</label>
+                    <select id="categoria" name="categoria" required>
+                        <option value="">Selecciona una categoría</option>
+                        <option value="planta">Planta Medicinal</option>
+                        <option value="remedio">Remedio / Receta</option>
+                        <option value="historia">Historia / Cultura</option>
+                        <option value="termino">Término / Diccionario</option>
+                        <option value="experiencia">Experiencia personal</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="descripcion">Descripción breve *</label>
+                <input type="text" id="descripcion" name="descripcion" 
+                       placeholder="Resumen de tu contribución" required>
+            </div>
+
+            <div class="form-group">
+                <label for="contenido">Contenido completo *</label>
+                <textarea id="contenido" name="contenido" rows="8" 
+                          placeholder="Describe detalladamente tu conocimiento ancestral, preparaciones, usos, tradiciones..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="referencias">Referencias (opcional)</label>
+                <input type="text" id="referencias" name="referencias" 
+                       placeholder="Fuentes, libros, sabedores, etc.">
+            </div>
+
+            <button type="submit" class="btn-submit">
+                <i class="fas fa-paper-plane"></i> Enviar Contribución
+            </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 1.5rem;">
+            <a href="../index.html" class="btn-back">← Volver al Inicio</a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🌿 Medicina Ancestral</h3>
+                <p>Preservando el conocimiento de nuestros ancestros</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#">Sobre Nosotros</a></li>
+                    <li><a href="../plantas.html">Plantas Medicinales</a></li>
+                    <li><a href="#">Historia y Cultura</a></li>
+                    <li><a href="#">Remedios y Recetas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal y Políticas</h4>
+                <ul>
+                    <li><a href="#">Términos de Uso</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Ley 1581 de 2012</a></li>
+                    <li><a href="#">Protección de Datos</a></li>
+                    <li><a href="#">Reportar un Error</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Medicina Ancestral Siapidara. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Verificar sesión
+        async function verificarSesion() {
+            try {
+                const response = await fetch('verificar_sesion.php');
+                const data = await response.json();
+                
+                const authButtons = document.getElementById('authButtons');
+                const userInfo = document.getElementById('userInfo');
+                const userName = document.getElementById('userName');
+                
+                if (data.logged_in) {
+                    // Usuario logueado
+                    authButtons.innerHTML = `
+                        <a href="perfil.html" class="user-name" style="color: white; text-decoration: none; margin-right: 1rem; display: flex; align-items: center; gap: 0.5rem;">
+                            <i class="fas fa-user-circle"></i> 
+                            ${data.nombre} ${data.apellido}
+                        </a>
+                        <a href="cerrar-sesion.php" class="btn-auth btn-login">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    `;
+                    userInfo.style.display = 'flex';
+                    userName.textContent = `${data.nombre} ${data.apellido}`;
+                } else {
+                    // Usuario no logueado - redirigir a login
+                    window.location.href = '../iniciar-sesion.html';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                window.location.href = '../iniciar-sesion.html';
+            }
+        }
+
+        // Mostrar mensaje si viene de la URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const mensaje = urlParams.get('mensaje');
+        const tipo = urlParams.get('tipo');
+        
+        if (mensaje) {
+            const messageDiv = document.getElementById('message');
+            messageDiv.textContent = decodeURIComponent(mensaje);
+            messageDiv.className = `message ${tipo}`;
+            messageDiv.style.display = 'block';
+            
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        verificarSesion();
+    </script>
+</body>
+</html>
