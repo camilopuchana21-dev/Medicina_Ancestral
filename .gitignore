@@ -1,0 +1,16 @@
+# Archivos de configuración local
+config/database.php
+
+# Archivos de XAMPP
+*.log
+*.tmp
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Carpeta vendor (si usas composer)
+vendor/
+
+# Archivos de caché
+.cache/

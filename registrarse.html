@@ -181,6 +181,128 @@
             color: #2c5f2d;
             font-weight: 600;
         }
+        .help-btn {
+            background: none;
+            border: none;
+            color: #2c5f2d;
+            cursor: pointer;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            text-align: right;
+            width: 100%;
+        }
+        .help-btn:hover {
+            text-decoration: underline;
+        }
+        /* Modal de Ayuda */
+        .modal-ayuda {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-ayuda-content {
+            background: white;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: slideUp 0.3s ease-out;
+        }
+        .modal-ayuda-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #2c5f2d, #4a7c4a);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            position: relative;
+        }
+        .modal-ayuda-header i {
+            font-size: 1.8rem;
+        }
+        .modal-ayuda-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+        .modal-ayuda-close {
+            position: absolute;
+            right: 1.5rem;
+            font-size: 1.8rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+        .modal-ayuda-close:hover {
+            opacity: 0.7;
+        }
+        .modal-ayuda-body {
+            padding: 1.5rem;
+        }
+        .ayuda-seccion {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+        .ayuda-seccion i {
+            font-size: 1.5rem;
+            color: #2c5f2d;
+            min-width: 40px;
+            text-align: center;
+        }
+        .ayuda-seccion h4 {
+            color: #2c5f2d;
+            margin-bottom: 0.3rem;
+        }
+        .ayuda-seccion p {
+            color: #555;
+            font-size: 0.9rem;
+            margin: 0.2rem 0;
+        }
+        .ayuda-ejemplo {
+            color: #888;
+            font-style: italic;
+            font-size: 0.85rem;
+        }
+        .modal-ayuda-footer {
+            padding: 1rem 1.5rem 1.5rem;
+            text-align: center;
+        }
+        .btn-cerrar-ayuda {
+            background: #2c5f2d;
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-cerrar-ayuda:hover {
+            background: #4a7c4a;
+            transform: scale(1.02);
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
     </style>
 </head>
 <body>
@@ -189,6 +311,7 @@
         <ul class="nav-menu">
             <li><a href="index.html">Inicio</a></li>
             <li><a href="plantas.html">Plantas</a></li>
+            <li><a href="contribuciones.html">Saberes</a></li>
             <li><a href="#">Historia</a></li>
             <li><a href="#">Contacto</a></li>
         </ul>
@@ -204,6 +327,8 @@
             <h1>Crear Cuenta</h1>
             <p>Únete a la comunidad de Medicina Ancestral</p>
         </div>
+
+      
 
         <div id="message" class="message"></div>
         <div id="countdown" class="countdown"></div>
@@ -245,10 +370,76 @@
             <button type="submit" class="btn-register-submit">
                 <i class="fas fa-user-plus"></i> Registrarse
             </button>
+              <!-- Botón de Ayuda Contextual -->
+        <button class="help-btn" onclick="abrirAyuda()">
+            <i class="fas fa-question-circle"></i> Ayuda para registrarse
+        </button>
         </form>
 
         <div class="login-link">
             ¿Ya tienes una cuenta? <a href="iniciar-sesion.html">Inicia sesión aquí</a>
+        </div>
+    </div>
+
+    <!-- Modal de Ayuda Contextual para Registro -->
+    <div id="modalAyuda" class="modal-ayuda">
+        <div class="modal-ayuda-content">
+            <div class="modal-ayuda-header">
+                <i class="fas fa-life-ring"></i>
+                <h3>Ayuda - Registrarse</h3>
+                <span class="modal-ayuda-close" onclick="cerrarAyuda()">&times;</span>
+            </div>
+            <div class="modal-ayuda-body">
+                <div class="ayuda-seccion">
+                    <i class="fas fa-user"></i>
+                    <div>
+                        <h4>Nombre y Apellido</h4>
+                        <p>Ingresa tus nombres y apellidos completos como deseas aparecer en la comunidad.</p>
+                        <p class="ayuda-ejemplo">Ejemplo: María González</p>
+                    </div>
+                </div>
+                <div class="ayuda-seccion">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <h4>Correo electrónico</h4>
+                        <p>Ingresa un correo válido. Será tu usuario para iniciar sesión.</p>
+                        <p class="ayuda-ejemplo">Ejemplo: tuemail@ejemplo.com</p>
+                        <p class="ayuda-ejemplo">No se compartirá con terceros.</p>
+                    </div>
+                </div>
+                <div class="ayuda-seccion">
+                    <i class="fas fa-lock"></i>
+                    <div>
+                        <h4>Contraseña</h4>
+                        <p>Debe tener al menos 6 caracteres.</p>
+                        <p class="ayuda-ejemplo">Recomendación: usa letras, números y símbolos para mayor seguridad.</p>
+                    </div>
+                </div>
+                <div class="ayuda-seccion">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <h4>Confirmar Contraseña</h4>
+                        <p>Escribe nuevamente tu contraseña para verificar que sea correcta.</p>
+                        <p class="ayuda-ejemplo">Ambas contraseñas deben coincidir exactamente.</p>
+                    </div>
+                </div>
+                <div class="ayuda-seccion">
+                    <i class="fas fa-graduation-cap"></i>
+                    <div>
+                        <h4>¿Por qué registrarse?</h4>
+                        <p>Al registrarte podrás:</p>
+                        <ul style="margin-left: 1rem; color: #555; font-size: 0.9rem;">
+                            <li>✓ Compartir tus conocimientos ancestrales</li>
+                            <li>✓ Ver todas las contribuciones de la comunidad</li>
+                            <li>✓ Editar tu perfil personal</li>
+                            <li>✓ Recuperar tu contraseña si la olvidas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-ayuda-footer">
+                <button onclick="cerrarAyuda()" class="btn-cerrar-ayuda">Entendido, quiero registrarme</button>
+            </div>
         </div>
     </div>
 
@@ -264,7 +455,6 @@
             messageDiv.className = `message ${tipo}`;
             messageDiv.style.display = 'block';
             
-            // Si es éxito, redirigir al index.html después de 2 segundos
             if (tipo === 'success') {
                 const countdownDiv = document.getElementById('countdown');
                 let segundos = 2;
@@ -281,10 +471,26 @@
                     }
                 }, 1000);
             } else {
-                // Si es error, ocultar después de 5 segundos
                 setTimeout(() => {
                     messageDiv.style.display = 'none';
                 }, 5000);
+            }
+        }
+
+        // Funciones para el modal de ayuda
+        function abrirAyuda() {
+            document.getElementById('modalAyuda').style.display = 'flex';
+        }
+
+        function cerrarAyuda() {
+            document.getElementById('modalAyuda').style.display = 'none';
+        }
+
+        // Cerrar modal al hacer clic fuera
+        window.onclick = function(event) {
+            const modalAyuda = document.getElementById('modalAyuda');
+            if (event.target === modalAyuda) {
+                cerrarAyuda();
             }
         }
     </script>
