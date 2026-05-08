@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manzanilla - Medicina Ancestral</title>
+    <title>Planta - Medicina Ancestral</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -24,56 +24,175 @@
 
     <main class="planta-detalle-page">
         <div class="planta-detalle-container">
-            <div class="planta-detalle-grid">
-                <div class="planta-detalle-imagen">
-                    <img src="imagenes/manzanilla.png" alt="Manzanilla">
+
+            <!-- Contenido dinámico de la planta -->
+            <div id="contenido-planta" class="planta-detalle-grid">
+                <p style="padding:3rem; color:#aaa;">Cargando...</p>
+            </div>
+
+            <!-- ===== SECCIÓN DE COMENTARIOS ===== -->
+            <div style="padding:2rem; border-top:1px solid #eee;">
+                <h3 style="color:#2c5f2d; font-size:1.3rem; border-bottom:2px solid #4a7c4a; padding-bottom:0.4rem; margin-bottom:1.5rem;">
+                    💬 Comentarios
+                </h3>
+
+                <div id="aviso-login" style="background:#f0f7f0; border:1px solid #b7e4c7; border-radius:10px; padding:1rem 1.5rem; margin-bottom:1.5rem;">
+                    <p style="margin:0; color:#555;">
+                        🔒 Debes <a href="iniciar-sesion.html" style="color:#2c5f2d; font-weight:bold;">iniciar sesión</a> para dejar un comentario.
+                    </p>
                 </div>
-                
-                <div class="planta-detalle-info">
-                    <h1>Manzanilla</h1>
-                    <p class="scientific-name">Matricaria chamomilla</p>
-                    
-                    <div class="rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                        <span>4.8 (120 reseñas)</span>
-                    </div>
 
-                    <div class="planta-detalle-tags">
-                        <span class="tag">Antiinflamatoria</span>
-                        <span class="tag">Calmante</span>
-                        <span class="tag">Digestiva</span>
-                        <span class="tag">Antiespasmódica</span>
-                        <span class="tag">Relajante</span>
-                    </div>
+                <div id="formulario-comentario" style="display:none; margin-bottom:2rem;">
+                    <h4 style="color:#2c5f2d; margin-bottom:0.8rem;">Deja tu comentario</h4>
+                    <textarea id="texto-comentario" rows="4"
+                        placeholder="Escribe tu experiencia con esta planta..."
+                        style="width:100%; padding:0.9rem; border:1px solid #ccc; border-radius:10px; font-size:1rem; resize:vertical; box-sizing:border-box; font-family:inherit;"></textarea>
+                    <button onclick="publicarComentario()"
+                        style="margin-top:0.8rem; background:#2c5f2d; color:white; border:none; padding:0.75rem 1.8rem; border-radius:8px; font-size:1rem; cursor:pointer;"
+                        onmouseover="this.style.background='#1a3a1a'"
+                        onmouseout="this.style.background='#2c5f2d'">
+                        📝 Publicar comentario
+                    </button>
+                </div>
 
-                    <div class="planta-detalle-descripcion">
-                        <h3>🌿 Descripción</h3>
-                        <p>La manzanilla es una de las plantas medicinales más antiguas y versátiles. Utilizada desde tiempos ancestrales por el pueblo Siapidara para tratar diversas dolencias y como planta sagrada en ceremonias de sanación.</p>
-                    </div>
-
-                    <div class="planta-detalle-usos">
-                        <h3>💚 Usos tradicionales</h3>
-                        <ul>
-                            <li><i class="fas fa-check-circle"></i> Problemas digestivos y cólicos</li>
-                            <li><i class="fas fa-check-circle"></i> Insomnio y ansiedad</li>
-                            <li><i class="fas fa-check-circle"></i> Cólicos menstruales</li>
-                            <li><i class="fas fa-check-circle"></i> Inflamaciones leves</li>
-                            <li><i class="fas fa-check-circle"></i> Irritaciones en la piel</li>
-                        </ul>
-                    </div>
-
-                    <div class="planta-detalle-preparacion">
-                        <h3>🍵 Preparación recomendada</h3>
-                        <p><strong>Infusión:</strong> Verter agua caliente sobre una cucharada de flores secas. Dejar reposar 10 minutos. Tomar 2-3 veces al día.</p>
-                        <p><strong>Cataplasma:</strong> Hervir flores frescas, escurrir y aplicar directamente sobre la piel.</p>
-                    </div>
+                <div id="lista-comentarios">
+                    <p style="color:#aaa; font-style:italic;">Aún no hay comentarios. ¡Sé el primero!</p>
                 </div>
             </div>
+            <!-- ===== FIN SECCIÓN DE COMENTARIOS ===== -->
+
         </div>
     </main>
+
+    <script>
+    const params = new URLSearchParams(window.location.search);
+    const nombrePlanta = params.get('planta') || 'manzanilla';
+
+    // 1. Cargar datos de la planta desde la BD
+    fetch('pages/obtener_planta.php?planta=' + encodeURIComponent(nombrePlanta))
+        .then(r => r.json())
+        .then(data => {
+            if (!data.ok) {
+                document.getElementById('contenido-planta').innerHTML =
+                    '<p style="padding:3rem;color:#888;">Planta no encontrada.</p>';
+                return;
+            }
+            const p = data.planta;
+            document.title = p.nombre_comun + ' - Medicina Ancestral';
+
+            // Estrellas
+            const rating = parseFloat(p.rating || 4.5);
+            const ratingR = Math.round(rating * 2) / 2;
+            let estrellas = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= ratingR) estrellas += '<i class="fas fa-star"></i>';
+                else if (i - 0.5 === ratingR) estrellas += '<i class="fas fa-star-half-alt"></i>';
+                else estrellas += '<i class="far fa-star"></i>';
+            }
+
+            // Usos
+            let usosHTML = '';
+            if (p.usos) {
+                usosHTML = `<div class="planta-detalle-usos">
+                    <h3>💚 Usos tradicionales</h3>
+                    <ul>
+                        ${p.usos.split('|').map(u => `<li><i class="fas fa-check-circle"></i> ${u.trim()}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+
+            // Preparación
+            let prepHTML = '';
+            if (p.preparacion) {
+                prepHTML = `<div class="planta-detalle-preparacion">
+                    <h3>🍵 Preparación recomendada</h3>
+                    ${p.preparacion.split('|').map(prep => {
+                        const idx = prep.indexOf(':');
+                        if (idx > -1) {
+                            return `<p><strong>${prep.substring(0, idx)}:</strong>${prep.substring(idx+1)}</p>`;
+                        }
+                        return `<p>${prep.trim()}</p>`;
+                    }).join('')}
+                </div>`;
+            }
+
+            document.getElementById('contenido-planta').innerHTML = `
+                <div class="planta-detalle-imagen">
+                    <img src="${p.imagen_principal}" alt="${p.nombre_comun}">
+                </div>
+                <div class="planta-detalle-info">
+                    <h1>${p.nombre_comun}</h1>
+                    <p class="scientific-name">${p.nombre_cientifico || ''}</p>
+                    <div class="rating">${estrellas}<span>${rating} (120 reseñas)</span></div>
+                    <div class="planta-detalle-descripcion">
+                        <h3>🌿 Descripción</h3>
+                        <p>${p.descripcion_general || ''}</p>
+                    </div>
+                    ${usosHTML}
+                    ${prepHTML}
+                </div>
+            `;
+        });
+
+    // 2. Verificar sesión
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('pages/verificar_sesion.php')
+            .then(r => r.json())
+            .then(data => {
+                if (data.logged_in) {
+                    document.querySelector('.auth-buttons').innerHTML = `
+                        <span style="color:white; margin-right:1rem;">
+                            <i class="fas fa-user"></i> ${data.nombre} ${data.apellido}
+                        </span>
+                        <a href="pages/cerrar-sesion.php" class="btn-auth btn-login">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    `;
+                    document.getElementById('formulario-comentario').style.display = 'block';
+                    document.getElementById('aviso-login').style.display = 'none';
+                }
+            })
+            .catch(() => {});
+    });
+
+    // 3. Publicar comentario
+    function publicarComentario() {
+        const texto = document.getElementById('texto-comentario').value.trim();
+        if (!texto) { alert('Escribe un comentario antes de publicar.'); return; }
+
+        const form = new FormData();
+        form.append('planta_id', nombrePlanta);
+        form.append('comentario', texto);
+
+        fetch('pages/guardar_comentario.php', { method: 'POST', body: form })
+            .then(r => r.json())
+            .then(data => {
+                if (data.ok) {
+                    document.getElementById('texto-comentario').value = '';
+                    agregarComentarioAlDOM(data.nombre, data.fecha, texto);
+                } else {
+                    alert(data.error || 'Error al guardar el comentario.');
+                }
+            });
+    }
+
+    function agregarComentarioAlDOM(nombre, fecha, texto) {
+        const lista = document.getElementById('lista-comentarios');
+        const aviso = lista.querySelector('p');
+        if (aviso) aviso.remove();
+
+        const div = document.createElement('div');
+        div.style.cssText = 'border-top:1px solid #eee; padding:1rem 0;';
+        div.innerHTML = `
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.4rem;">
+                <i class="fas fa-user-circle" style="color:#4a7c4a; font-size:1.2rem;"></i>
+                <strong style="color:#2c5f2d;">${nombre}</strong>
+                <span style="color:#aaa; font-size:0.85rem;">${fecha}</span>
+            </div>
+            <p style="margin:0; color:#555; line-height:1.6;">${texto}</p>
+        `;
+        lista.prepend(div);
+    }
+    </script>
 </body>
 </html>

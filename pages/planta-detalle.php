@@ -1,7 +1,9 @@
 <?php
 // pages/planta-detalle.php
+session_start(); // ← PRIMERO que todo
 $titulo = 'Detalle de Planta';
 require_once '../config/supabase.php';
+require_once '../config/database.php';
 include '../includes/header.php';
 
 $id = $_GET['id'] ?? 1;
@@ -22,6 +24,8 @@ if (!$planta) {
 
 $propiedades = obtenerPropiedadesPlanta($id);
 $usos = obtenerUsosPlanta($id);
+
+$usuario_logueado = isset($_SESSION['user_id']);
 ?>
 
 <div class="planta-detalle-page">
@@ -77,4 +81,49 @@ $usos = obtenerUsosPlanta($id);
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?>
+<!-- SECCIÓN DE COMENTARIOS (ANTES del footer) -->
+<div class="comentarios-section">
+    <div class="comentarios-container">
+        <h3>💬 Comentarios</h3>
+
+        <?php if ($usuario_logueado): ?>
+            <div class="formulario-comentario">
+                <h4>Deja tu comentario</h4>
+                <form action="guardar_comentario.php" method="POST">
+                    <input type="hidden" name="planta_id" value="<?php echo $id; ?>">
+                    <textarea name="comentario" rows="4" placeholder="Escribe tu experiencia con esta planta..." required></textarea>
+                    <button type="submit" class="btn-comentar">📝 Publicar comentario</button>
+                </form>
+            </div>
+        <?php else: ?>
+            <div class="aviso-login">
+                <p>🔒 Debes <a href="../iniciar-sesion.html">iniciar sesión</a> para dejar un comentario.</p>
+            </div>
+        <?php endif; ?>
+
+        <div class="lista-comentarios">
+            <?php
+            $sql = "SELECT c.comentario, c.fecha, u.nombre, u.apellido 
+                    FROM comentarios_plantas c 
+                    JOIN usuarios u ON c.usuario_id = u.id 
+                    WHERE c.planta_id = $id 
+                    ORDER BY c.fecha DESC";
+            $resultado = mysqli_query($conn, $sql);
+            if ($resultado && mysqli_num_rows($resultado) > 0):
+                while ($row = mysqli_fetch_assoc($resultado)):
+            ?>
+                <div class="comentario-item">
+                    <div class="comentario-autor">
+                        <strong><?php echo htmlspecialchars($row['nombre'] . ' ' . $row['apellido']); ?></strong>
+                        <span class="fecha-comentario"><?php echo date('d/m/Y H:i', strtotime($row['fecha'])); ?></span>
+                    </div>
+                    <p><?php echo htmlspecialchars($row['comentario']); ?></p>
+                </div>
+            <?php endwhile; else: ?>
+                <p class="sin-comentarios">Aún no hay comentarios. ¡Sé el primero!</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+
+<?php include '../includes/footer.php'; ?> <!-- ← footer siempre al final -->

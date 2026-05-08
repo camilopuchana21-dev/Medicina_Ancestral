@@ -138,5 +138,25 @@
             </div>
         </div>
     </main>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('pages/verificar_sesion.php')
+        .then(r => r.json())
+        .then(data => {
+            const authButtons = document.querySelector('.auth-buttons');
+            if (data.logged_in) {
+                authButtons.innerHTML = `
+                    <span style="color:white; margin-right:1rem;">
+                        <i class="fas fa-user"></i> ${data.nombre} ${data.apellido}
+                    </span>
+                    <a href="pages/cerrar-sesion.php" class="btn-auth btn-login">
+                        <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                    </a>
+                `;
+            }
+        })
+        .catch(() => {});
+});
+</script>
 </body>
 </html>
