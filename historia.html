@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historia - Medicina Ancestral</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f5f5;
+        }
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: linear-gradient(to right, #2c5f2d, #4a7c4a);
+            color: white;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: bold; }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .nav-menu a:hover, .nav-menu a.active {
+            opacity: 0.8;
+            border-bottom: 2px solid white;
+            padding-bottom: 0.25rem;
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        .btn-auth {
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        .btn-login {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        .btn-login:hover {
+            background: white;
+            color: #2c5f2d;
+        }
+        .btn-register {
+            background: white;
+            color: #2c5f2d;
+            border: 2px solid white;
+        }
+        .btn-register:hover {
+            background: transparent;
+            color: white;
+        }
+        .historia-header {
+            text-align: center;
+            padding: 120px 2rem 4rem;
+            background: linear-gradient(rgba(44, 95, 45, 0.85), rgba(44, 95, 45, 0.85)), url('https://images.unsplash.com/photo-1520412099551-510b1b3ea50e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+        }
+        .historia-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .historia-header p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+        .historia-container {
+            max-width: 1000px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+        .historia-seccion {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .historia-seccion h2 {
+            color: #2c5f2d;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.8rem;
+        }
+        .historia-seccion h2 i {
+            font-size: 1.8rem;
+        }
+        .historia-seccion h3 {
+            color: #2c5f2d;
+            margin: 1rem 0 0.5rem;
+        }
+        .historia-seccion p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+        .historia-seccion ul {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+        .historia-seccion li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        .cita {
+            background: #e8f5e8;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #2c5f2d;
+            font-style: italic;
+            color: #2c5f2d;
+        }
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        .timeline-item {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .timeline-year {
+            min-width: 80px;
+            background: #2c5f2d;
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        .timeline-text {
+            background: #f9f9f9;
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            flex: 1;
+        }
+        footer {
+            background-color: #1a3a1a;
+            color: white;
+            padding: 3rem 5% 1rem;
+            margin-top: 3rem;
+        }
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .footer-section h3, .footer-section h4 {
+            margin-bottom: 1rem;
+        }
+        .footer-section p, .footer-section ul {
+            color: #ccc;
+        }
+        .footer-section ul {
+            list-style: none;
+        }
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+        .footer-section ul li a {
+            color: #ccc;
+            text-decoration: none;
+        }
+        .footer-bottom {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+        }
+        @media (max-width: 768px) {
+            .historia-header h1 { font-size: 2rem; }
+            .timeline-item { flex-direction: column; }
+            .timeline-year { align-self: flex-start; }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🌿 Medicina Ancestral</div>
+        <ul class="nav-menu">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="plantas.html">Plantas</a></li>
+            <li><a href="contribuciones.html">Saberes</a></li>
+            <li><a href="historia.html" class="active">Historia</a></li>
+            <li><a href="#">Contacto</a></li>
+        </ul>
+        <div class="auth-buttons" id="authButtons">
+            <!-- Los botones se cargarán dinámicamente -->
+        </div>
+    </nav>
+
+    <div class="historia-header">
+        <h1><i class="fas fa-landmark"></i> Nuestra Historia</h1>
+        <p>Un viaje a través del tiempo preservando la sabiduría ancestral del pueblo Siapidara</p>
+    </div>
+
+    <div class="historia-container">
+        <div class="historia-seccion">
+            <h2><i class="fas fa-users"></i> El Pueblo Siapidara</h2>
+            <p>El pueblo Siapidara es una comunidad indígena originaria de la región andina de Colombia, específicamente en el departamento de Nariño. Durante siglos, han sido guardianes de un vasto conocimiento sobre plantas medicinales, transmitido de generación en generación a través de la tradición oral.</p>
+            <p>Su cosmovisión se basa en el equilibrio entre el ser humano, la naturaleza y el universo. Para los Siapidara, las plantas no solo son recursos curativos, sino seres espirituales que poseen energía vital y sabiduría propia.</p>
+            <div class="cita">
+                <i class="fas fa-quote-left"></i> "Las plantas son nuestras abuelas, nos enseñan y nos curan cuando estamos enfermos. No se trata solo de tomar una medicina, se trata de escuchar lo que la planta tiene para decirnos."
+            </div>
+        </div>
+
+        <div class="historia-seccion">
+            <h2><i class="fas fa-tree"></i> Origen de la Medicina Ancestral</h2>
+            <p>La medicina tradicional Siapidara nace de la observación profunda de la naturaleza y la experimentación empírica a lo largo de miles de años. Los abuelos y abuelas sabedores (Taitas y Mamas) han sido los encargados de recolectar, probar y catalogar las propiedades curativas de cientos de plantas nativas.</p>
+            <p>Cada planta descubierta era sometida a rigurosos procesos de observación: su hábitat, su forma de crecimiento, su relación con otras especies, los animales que se alimentaban de ella y los efectos que producía en el cuerpo humano.</p>
+            <ul>
+                <li><strong>🌿 Plantas sagradas:</strong> Utilizadas en ceremonias espirituales y rituales de sanación.</li>
+                <li><strong>🍵 Plantas medicinales:</strong> Empleadas en infusiones, cataplasmas y ungüentos para tratar enfermedades.</li>
+                <li><strong>🌱 Plantas nutritivas:</strong> Incorporadas en la alimentación diaria por sus beneficios para la salud.</li>
+            </ul>
+        </div>
+
+        <div class="historia-seccion">
+            <h2><i class="fas fa-timeline"></i> Línea del Tiempo</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-year">3,500 a.C.</div>
+                    <div class="timeline-text">Primeros asentamientos de comunidades indígenas en la región de Nariño.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1,500 a.C.</div>
+                    <div class="timeline-text">Desarrollo del conocimiento botánico y primeras prácticas medicinales organizadas.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">500 d.C.</div>
+                    <div class="timeline-text">Consolidación del sistema de salud tradicional Siapidara.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1,500 d.C.</div>
+                    <div class="timeline-text">Llegada de los colonizadores europeos y sincretismo cultural.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">1,800 d.C.</div>
+                    <div class="timeline-text">Resistencia cultural y preservación de conocimientos en comunidades apartadas.</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-year">2,021 d.C.</div>
+                    <div class="timeline-text">Creación de la plataforma Medicina Ancestral para preservar el conocimiento.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="historia-seccion">
+            <h2><i class="fas fa-hand-sparkles"></i> Tradiciones y Ceremonias</h2>
+            <p>Las prácticas medicinales Siapidara están profundamente ligadas a rituales y ceremonias que honran a la madre tierra (Pachamama) y a los espíritus de las plantas. Algunas de las ceremonias más importantes incluyen:</p>
+            <ul>
+                <li><strong>🌸 Ritual de la luna nueva:</strong> Agradecimiento por las plantas medicinales del mes y petición de sabiduría.</li>
+                <li><strong>🍃 Ceremonia del primer fruto:</strong> Ofrenda a las plantas madre antes de recolectar sus hojas o frutos.</li>
+                <li><strong>🌕 Ritual de sanación ancestral:</strong> Sesión guiada por un Taita que combina plantas, cantos y conexión espiritual.</li>
+                <li><strong>💧 Baño de purificación:</strong> Uso de plantas específicas para limpiar energías negativas y preparar el cuerpo para sanación.</li>
+            </ul>
+            <div class="cita">
+                <i class="fas fa-quote-left"></i> "Cada planta tiene un dueño, un espíritu que la protege. Antes de usarla debemos pedir permiso y ofrecer una muestra de gratitud."
+            </div>
+        </div>
+
+        <div class="historia-seccion">
+            <h2><i class="fas fa-graduation-cap"></i> El Sabedor Tradicional</h2>
+            <p>El Taita o sabedor tradicional es la máxima autoridad en medicina ancestral. Su formación comienza desde la infancia, aprendiendo de sus abuelos los secretos de las plantas y su uso adecuado. El proceso de convertirse en Taita puede tomar más de 20 años de estudio práctico y espiritual.</p>
+            <p>Los sabedores no solo curan el cuerpo, también atienden el espíritu y las emociones. Para ellos, la enfermedad no es solo un desequilibrio físico sino también energético, por lo cual el tratamiento siempre involucra aspectos espirituales.</p>
+        </div>
+
+        <div class="historia-seccion">
+            <h2><i class="fas fa-seedling"></i> Preservación del Conocimiento</h2>
+            <p>En la actualidad, el conocimiento medicinal Siapidara enfrenta el riesgo de perderse debido a la modernización, el desplazamiento de las comunidades indígenas y la falta de interés de las nuevas generaciones. Por esta razón, proyectos como <strong>Medicina Ancestral</strong> buscan documentar y difundir este invaluable saber.</p>
+            <p>Invitamos a todos a contribuir con sus conocimientos y experiencias para que esta tradición milenaria no se pierda y pueda seguir beneficiando a la humanidad.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🌿 Medicina Ancestral</h3>
+                <p>Preservando el conocimiento de nuestros ancestros</p>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Enlaces Rápidos</h4>
+                <ul>
+                    <li><a href="#">Sobre Nosotros</a></li>
+                    <li><a href="plantas.html">Plantas Medicinales</a></li>
+                    <li><a href="historia.html">Historia y Cultura</a></li>
+                    <li><a href="#">Remedios y Recetas</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Legal y Políticas</h4>
+                <ul>
+                    <li><a href="#">Términos de Uso</a></li>
+                    <li><a href="#">Política de Privacidad</a></li>
+                    <li><a href="#">Ley 1581 de 2012</a></li>
+                    <li><a href="#">Protección de Datos</a></li>
+                    <li><a href="#">Reportar un Error</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2026 Medicina Ancestral Siapidara. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        function checkSession() {
+            fetch('pages/verificar_sesion.php')
+                .then(response => response.json())
+                .then(data => {
+                    const authButtons = document.getElementById('authButtons');
+                    if (data.logged_in) {
+                        authButtons.innerHTML = `
+                            <a href="pages/perfil.html" style="color: white; text-decoration: none; margin-right: 1rem;">
+                                <i class="fas fa-user-circle"></i> ${data.nombre} ${data.apellido}
+                            </a>
+                            <a href="pages/cerrar-sesion.php" class="btn-auth btn-login">Cerrar Sesión</a>
+                        `;
+                    } else {
+                        authButtons.innerHTML = `
+                            <a href="iniciar-sesion.html" class="btn-auth btn-login">Iniciar Sesión</a>
+                            <a href="registrarse.html" class="btn-auth btn-register">Registrarse</a>
+                        `;
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        }
+        checkSession();
+    </script>
+</body>
+</html>
