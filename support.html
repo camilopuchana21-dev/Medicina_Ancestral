@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte - Medicina Ancestral</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* ── HERO ── */
+        .support-hero {
+            background: linear-gradient(135deg, #2c5f2d 0%, #1a3a1a 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+        .support-hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
+        .support-hero p  { font-size: 1.1rem; opacity: 0.85; }
+
+        /* ── TABS ── */
+        .support-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #f9f7f4;
+            padding: 1.2rem;
+            border-bottom: 2px solid #e0ddd8;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: white;
+            border: 2px solid #ccc;
+            border-radius: 30px;
+            padding: 0.55rem 1.4rem;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            color: #555;
+        }
+        .tab-btn:hover  { border-color: #4a7c4a; color: #2c5f2d; }
+        .tab-btn.active { background: #2c5f2d; border-color: #2c5f2d; color: white; }
+
+        /* ── CONTENIDO ── */
+        .support-content {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 0 1.5rem 3rem;
+        }
+        .tab-panel { display: none; }
+        .tab-panel.active { display: block; }
+
+        /* ── SECCIÓN TÍTULO ── */
+        .section-title {
+            font-size: 1.4rem;
+            color: #2c5f2d;
+            border-bottom: 2px solid #4a7c4a;
+            padding-bottom: 0.4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* ── PDF VIEWER ── */
+        .pdf-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .pdf-toolbar {
+            background: #2c5f2d;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .pdf-toolbar span { font-weight: 600; font-size: 1rem; }
+        .pdf-toolbar a {
+            background: white;
+            color: #2c5f2d;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+        .pdf-toolbar a:hover { background: #e0f0e0; }
+        .pdf-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            color: #aaa;
+            gap: 1rem;
+            text-align: center;
+        }
+        .pdf-placeholder i { font-size: 4rem; color: #c8e6c9; }
+        .pdf-placeholder p { font-size: 1rem; max-width: 360px; }
+        .pdf-placeholder .upload-hint {
+            background: #f0f7f0;
+            border: 2px dashed #b7e4c7;
+            border-radius: 10px;
+            padding: 1rem 2rem;
+            font-size: 0.9rem;
+            color: #4a7c4a;
+        }
+        iframe.pdf-frame {
+            width: 100%;
+            height: 600px;
+            border: none;
+            display: none;
+        }
+
+        /* ── GALERÍA IMÁGENES ── */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 1rem;
+        }
+        .gallery-item {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .gallery-item:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.13); }
+        .gallery-item img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            display: block;
+        }
+        .gallery-item .img-label {
+            padding: 0.6rem 0.8rem;
+            font-size: 0.85rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        /* Placeholder galería */
+        .gallery-placeholder {
+            grid-column: 1/-1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 3rem;
+            color: #aaa;
+            gap: 0.8rem;
+            text-align: center;
+        }
+        .gallery-placeholder i { font-size: 3.5rem; color: #c8e6c9; }
+
+        /* ── VIDEO ── */
+        .video-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        .video-toolbar {
+            background: #1a3a1a;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            font-weight: 600;
+        }
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            background: #111;
+        }
+        .video-wrapper video,
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            border: none;
+        }
+        .video-placeholder {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #aaa;
+            gap: 0.8rem;
+            text-align: center;
+            padding: 1rem;
+            box-sizing: border-box;
+        }
+        .video-placeholder i { font-size: 4rem; color: #3a5a3a; }
+        .video-placeholder p { font-size: 0.95rem; max-width: 340px; }
+
+        /* ── LIGHTBOX ── */
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.88);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .lightbox.open { display: flex; }
+        .lightbox img {
+            max-width: 90vw;
+            max-height: 85vh;
+            border-radius: 8px;
+            object-fit: contain;
+        }
+        .lightbox-close {
+            position: absolute;
+            top: 1rem; right: 1.5rem;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+            line-height: 1;
+        }
+
+        /* ── INSTRUCCIONES ADMIN ── */
+        .admin-hint {
+            background: #f0f7f0;
+            border-left: 4px solid #4a7c4a;
+            border-radius: 0 8px 8px 0;
+            padding: 1rem 1.2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+            color: #2c5f2d;
+        }
+        .admin-hint code {
+            background: #d4edda;
+            padding: 0.1rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">🌿 Medicina Ancestral</div>
+        <ul class="nav-menu">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="plantas.html">Plantas</a></li>
+            <li><a href="historia.html">Historia</a></li>
+            <li><a href="support.html">Support</a></li>
+        </ul>
+        <div class="auth-buttons">
+            <a href="iniciar-sesion.html" class="btn-auth btn-login">Iniciar Sesión</a>
+            <a href="registrarse.html" class="btn-auth btn-register">Registrarse</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <div class="support-hero">
+        <h1>📚 Centro de Soporte</h1>
+        <p>Encuentra el manual de usuario, imágenes de referencia y el video tutorial</p>
+    </div>
+
+    <!-- TABS -->
+    <div class="support-tabs">
+        <button class="tab-btn active" onclick="cambiarTab('pdf', this)">
+            <i class="fas fa-file-pdf"></i> Manual PDF
+        </button>
+        
+        <button class="tab-btn" onclick="cambiarTab('video', this)">
+            <i class="fas fa-play-circle"></i> Video Tutorial
+        </button>
+    </div>
+
+    <div class="support-content">
+
+        <!-- ===== PANEL PDF ===== -->
+        <div id="tab-pdf" class="tab-panel active">
+            <h2 class="section-title"><i class="fas fa-file-pdf"></i> Manual de Usuario</h2>
+
+            <div class="pdf-card">
+                <div class="pdf-toolbar">
+                    <span><i class="fas fa-file-pdf"></i> Manual de Usuario - Medicina Ancestral</span>
+                    <a id="pdf-download" href="#" download>
+                        <i class="fas fa-download"></i> Descargar
+                    </a>
+                </div>
+
+                <!-- ↓ Cambia el src por la ruta real de tu PDF ↓ -->
+                <iframe id="pdf-frame" class="pdf-frame" src=""></iframe>
+
+                <!-- Placeholder mientras no hay PDF -->
+                <div class="pdf-placeholder" id="pdf-placeholder">
+                    <i class="fas fa-file-pdf"></i>
+                    <p>El manual de usuario aparecerá aquí una vez que sea agregado al proyecto.</p>
+                    <div class="upload-hint">
+                        📁 Coloca tu PDF en: <strong>manuales/manual-usuario.pdf</strong><br>
+                        Luego actualiza la ruta en el código.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== PANEL VIDEO ===== -->
+        <div id="tab-video" class="tab-panel">
+            <h2 class="section-title"><i class="fas fa-play-circle"></i> Video Tutorial</h2>
+
+            <div class="video-card">
+                <div class="video-toolbar">
+                    <i class="fas fa-play-circle"></i> Tutorial — Cómo usar los comentarios de las plantas
+                </div>
+                <div class="video-wrapper" id="video-wrapper">
+                    <div class="video-placeholder" id="video-placeholder">
+                        <i class="fas fa-video"></i>
+                        <p>El video tutorial aparecerá aquí una vez que sea configurado.</p>
+                        <small style="color:#666;">Formatos soportados: MP4 local o enlace de YouTube</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div class="lightbox" id="lightbox" onclick="cerrarLightbox()">
+        <button class="lightbox-close" onclick="cerrarLightbox()">✕</button>
+        <img id="lightbox-img" src="" alt="">
+    </div>
+
+    <script>
+    /* ============================================================
+       CONFIGURACIÓN — Modifica estos valores para agregar contenido
+       ============================================================ */
+
+    // 1. PDF: pon la ruta de tu archivo PDF aquí
+    const pdfSrc = "manualu/pdf/manual_usu.pdf";
+    // Ejemplo: const pdfSrc = "manuales/manual-usuario.pdf";
+
+    // 2. VIDEO: pon la ruta o URL del video aquí
+    const videoSrc = "manualu/videos/Manual_de_usuario.mp4";
+    // Ejemplo local:   const videoSrc = "videos/tutorial.mp4";
+
+    /* ============================================================
+       NO NECESITAS MODIFICAR NADA DEBAJO DE ESTA LÍNEA
+       ============================================================ */
+
+    // Cargar PDF
+    if (pdfSrc) {
+        const frame = document.getElementById('pdf-frame');
+        frame.src = pdfSrc;
+        frame.style.display = 'block';
+        document.getElementById('pdf-placeholder').style.display = 'none';
+        document.getElementById('pdf-download').href = pdfSrc;
+    }
+
+    // Renderizar galería
+    const grid = document.getElementById('gallery-grid');
+    if (imagenesManual.length > 0) {
+        imagenesManual.forEach(img => {
+            const item = document.createElement('div');
+            item.className = 'gallery-item';
+            item.innerHTML = `<img src="${img.src}" alt="${img.label}" onclick="abrirLightbox('${img.src}')">
+                              <div class="img-label">${img.label}</div>`;
+            grid.appendChild(item);
+        });
+    } else {
+        grid.innerHTML = `<div class="gallery-placeholder">
+            <i class="fas fa-images"></i>
+            <p>Las imágenes del manual aparecerán aquí.<br>Agrégalas en el array <strong>imagenesManual</strong>.</p>
+        </div>`;
+    }
+
+    // Cargar video
+    if (videoSrc) {
+        const wrapper = document.getElementById('video-wrapper');
+        document.getElementById('video-placeholder').style.display = 'none';
+        if (videoSrc.includes('youtube.com') || videoSrc.includes('youtu.be')) {
+            wrapper.innerHTML += `<iframe src="${videoSrc}" allowfullscreen></iframe>`;
+        } else {
+            wrapper.innerHTML += `<video controls><source src="${videoSrc}" type="video/mp4">Tu navegador no soporta video.</video>`;
+        }
+    }
+
+    // Cambiar tab
+    function cambiarTab(nombre, btn) {
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.getElementById('tab-' + nombre).classList.add('active');
+        btn.classList.add('active');
+    }
+
+    // Lightbox
+    function abrirLightbox(src) {
+        document.getElementById('lightbox-img').src = src;
+        document.getElementById('lightbox').classList.add('open');
+    }
+    function cerrarLightbox() {
+        document.getElementById('lightbox').classList.remove('open');
+    }
+
+    // Navbar dinámico
+    document.addEventListener('DOMContentLoaded', function() {
+        fetch('pages/verificar_sesion.php')
+            .then(r => r.json())
+            .then(data => {
+                if (data.logged_in) {
+                    document.querySelector('.auth-buttons').innerHTML = `
+                        <span style="color:white; margin-right:1rem;">
+                            <i class="fas fa-user"></i> ${data.nombre} ${data.apellido}
+                        </span>
+                        <a href="pages/cerrar-sesion.php" class="btn-auth btn-login">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    `;
+                }
+            }).catch(() => {});
+    });
+    </script>
+</body>
+</html>
