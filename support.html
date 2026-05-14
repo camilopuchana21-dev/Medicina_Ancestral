@@ -201,6 +201,8 @@
         .video-placeholder i { font-size: 4rem; color: #3a5a3a; }
         .video-placeholder p { font-size: 0.95rem; max-width: 340px; }
 
+        
+
         /* ── LIGHTBOX ── */
         .lightbox {
             display: none;
@@ -278,6 +280,10 @@
         <button class="tab-btn" onclick="cambiarTab('video', this)">
             <i class="fas fa-play-circle"></i> Video Tutorial
         </button>
+
+        <button class="tab-btn" onclick="cambiarTab('video2', this)">
+            <i class="fas fa-play-circle"></i> Guia rapida
+        </button>
     </div>
 
     <div class="support-content">
@@ -285,6 +291,8 @@
         <!-- ===== PANEL PDF ===== -->
         <div id="tab-pdf" class="tab-panel active">
             <h2 class="section-title"><i class="fas fa-file-pdf"></i> Manual de Usuario</h2>
+
+            
 
             <div class="pdf-card">
                 <div class="pdf-toolbar">
@@ -309,6 +317,20 @@
             </div>
         </div>
 
+        <!-- ===== PANEL IMÁGENES ===== -->
+        <div id="tab-imagenes" class="tab-panel">
+            <h2 class="section-title"><i class="fas fa-images"></i> Imágenes de Referencia</h2>
+
+            <div class="admin-hint">
+                <strong>¿Cómo agregar imágenes?</strong> Agrega objetos al array <code>imagenesManual</code>
+                en el script con <code>src</code> (ruta) y <code>label</code> (descripción).
+            </div>
+
+            <div class="gallery-grid" id="gallery-grid">
+                <!-- Las imágenes se renderizan desde el array JS -->
+            </div>
+        </div>
+
         <!-- ===== PANEL VIDEO ===== -->
         <div id="tab-video" class="tab-panel">
             <h2 class="section-title"><i class="fas fa-play-circle"></i> Video Tutorial</h2>
@@ -324,6 +346,27 @@
                         <small style="color:#666;">Formatos soportados: MP4 local o enlace de YouTube</small>
                     </div>
                 </div>
+
+
+            </div>
+        </div>
+
+        <div id="tab-video2" class="tab-panel">
+            <h2 class="section-title"><i class="fas fa-play-circle"></i> Guia rapida</h2>
+
+            <div class="video-card">
+                <div class="video-toolbar">
+                    <i class="fas fa-play-circle"></i> Tutorial — Guia rapida
+                </div>
+                <div class="video-wrapper" id="video-wrapper2">
+                    <div class="video-placeholder" id="video-placeholder2">
+                        <i class="fas fa-video"></i>
+                        <p>El video tutorial aparecerá aquí una vez que sea configurado.</p>
+                        <small style="color:#666;">Formatos soportados: MP4 local o enlace de YouTube</small>
+                    </div>
+                </div>
+
+
             </div>
         </div>
 
@@ -344,8 +387,16 @@
     const pdfSrc = "manualu/pdf/manual_usu.pdf";
     // Ejemplo: const pdfSrc = "manuales/manual-usuario.pdf";
 
-    // 2. VIDEO: pon la ruta o URL del video aquí
+    // 2. IMÁGENES: agrega tus imágenes a este array
+    const imagenesManual = [
+        // { src: "imagenes/captura1.png", label: "Pantalla de inicio" },
+        // { src: "imagenes/captura2.png", label: "Módulo de plantas" },
+        // { src: "imagenes/captura3.png", label: "Detalle de planta" },
+    ];
+
+    // 3. VIDEO: pon la ruta o URL del video aquí
     const videoSrc = "manualu/videos/Manual_de_usuario.mp4";
+    const videoSrc2 = "manualu/videos/guia_ra.mp4";
     // Ejemplo local:   const videoSrc = "videos/tutorial.mp4";
 
     /* ============================================================
@@ -386,6 +437,15 @@
             wrapper.innerHTML += `<iframe src="${videoSrc}" allowfullscreen></iframe>`;
         } else {
             wrapper.innerHTML += `<video controls><source src="${videoSrc}" type="video/mp4">Tu navegador no soporta video.</video>`;
+        }
+    }
+    if (videoSrc2) {
+        const wrapper = document.getElementById('video-wrapper2');
+        document.getElementById('video-placeholder2').style.display = 'none';
+        if (videoSrc.includes('youtube.com') || videoSrc2.includes('youtu.be')) {
+            wrapper.innerHTML += `<iframe src="${videoSrc2}" allowfullscreen></iframe>`;
+        } else {
+            wrapper.innerHTML += `<video controls><source src="${videoSrc2}" type="video/mp4">Tu navegador no soporta video.</video>`;
         }
     }
 
